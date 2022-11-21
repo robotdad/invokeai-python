@@ -18,7 +18,7 @@ virtualenv venv
 .\venv\Scripts\activate.ps1
 ```
 
-Presently there is (an issue)[https://github.com/invoke-ai/InvokeAI/issues/1409] with installing torch that is impacting Windows at least. So run this before installing from requirements.txt. Note this pinned version of torch does not have a build for Python 3.11, you need 3.10 or earlier.
+Presently there is [an issue](https://github.com/invoke-ai/InvokeAI/issues/1409) with installing torch that is impacting Windows at least. So run this before installing from requirements.txt. Note this pinned version of torch does not have a build for Python 3.11, you need 3.10 or earlier.
 ```
 pip install --extra-index-url https://download.pytorch.org/whl/cu116 --trusted-host https://download.pytorch.org torch==1.12.1 torchvision==0.13.1
 ```
