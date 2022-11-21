@@ -6,5 +6,5 @@ from ldm.generate import Generate
 gr = Generate(conf = '../InvokeAI/configs/models.yaml')
 gr.load_model()
 gr.prompt2png(prompt     = "an astronaut riding a horse",
-              outdir     = "./outputs/samples",
+              outdir     = "./outputs",
               iterations = 3)

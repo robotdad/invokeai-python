@@ -33,7 +33,7 @@ def image_writer(image, seed, first_seed=None, use_prefix=None):
             seeds = [seed],
             model_hash = gen.model_hash), 
         name=filename)
-    print('/n Generated:', path)
+    print('\n Generated:', path)
 
 # Setup the opt object, not typed, look to ldm/denerate for options corresponding to the cli
 opt = Args()
@@ -69,5 +69,5 @@ file_writer = PngWriter(opt.output_dir)
 prefix = file_writer.unique_prefix()
 
 # Generate the image, iterations is optional, default is 1
-gen.prompt2image(image_callback=image_writer, prompt=opt.prompt)
+gen.prompt2image(image_callback=image_writer, prompt=opt.prompt, iterations = 3)
 
