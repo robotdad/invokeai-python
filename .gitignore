@@ -159,8 +159,5 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# config file (should be copied from local InvokeAI installation, modify to point to your local models and weights)
-configs/models.yaml
-
 # default local output directory
 outputs/
