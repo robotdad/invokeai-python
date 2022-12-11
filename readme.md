@@ -10,7 +10,7 @@ For the images with metadata in them, you can start the InvokeAI CLI and load a 
 Before running the scripts you should have InvokeAI working locally as the scripts depend on the model files. Use full paths in the configs/models.yaml file there so it can be used from other locations. The default generation of that file uses relative paths. The scripts use relative paths to that assume InvokeAI in the same folder this project is in, adjust as needed. The scripts themselves have no dependencies on InvokeAI source code being available locally.
 
 ## Setup
-InvokeAI currently set to 2.13, update requirements.txt to change. This could be reworked to use conda instead, but the instructions here use the virtualenv path.
+InvokeAI currently set to 2.2.3, update requirements.txt to change. This could be reworked to use conda instead, but the instructions here use the virtualenv path.
 
 From within this project directory:
 ```
