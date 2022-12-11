@@ -3,8 +3,8 @@
 from ldm.generate import Generate
 
 # Specify full paths in the InvokeAI configs/models.yaml to use from other directories
-gr = Generate(conf = '../InvokeAI/configs/models.yaml')
+gr = Generate(conf = 'e:/invokeai/configs/models.yaml')
 gr.load_model()
-gr.prompt2png(prompt     = "an astronaut riding a horse",
+gr.prompt2png(prompt     = "a squirrel eating ice cream",
               outdir     = "./outputs",
-              iterations = 3)
+              iterations = 1)

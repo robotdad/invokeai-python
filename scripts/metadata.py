@@ -2,6 +2,7 @@
 # validate the metadata by passing the output to InvokeAI/scripts/sd-metadata.py
 import os
 from ldm.generate import Generate
+from ldm.invoke.globals import Globals
 from ldm.invoke.args import Args, metadata_dumps
 from ldm.invoke.pngwriter import PngWriter
 
@@ -37,11 +38,21 @@ def image_writer(image, seed, first_seed=None, use_prefix=None):
 
 # Setup the opt object, not typed, look to ldm/denerate for options corresponding to the cli
 opt = Args()
+
 # Specify full paths in the InvokeAI configs/models.yaml to use from other directories
-opt.conf = '../InvokeAI/configs/models.yaml' 
+# Specify the path to the models.yaml file in opt.conf if you are not using the defaults settings above
+# you may need to specify additional opt.conf options if you are not using the defaults
+# For example, opt.sampler_name, opt.steps, etc.
+# opt.conf = '../InvokeAI/configs/models.yaml' 
+# This will load the default .invokeai settings
+args = opt.parse_args()
+Globals.root = os.path.expanduser(args.root_dir or os.environ.get('INVOKEAI_ROOT') or os.path.abspath('.'))
+Globals.try_patchmatch = args.patchmatch
+if not os.path.isabs(opt.conf):
+    opt.conf = os.path.normpath(os.path.join(Globals.root,opt.conf))
+
 # Model is stored in the metadata but not retrieved by !fetch
 opt.model = 'stable-diffusion-1.5'
-opt.sampler_name = 'k_lms' # k_lms is the default sampler
 
 # Channging these options means you will need to create a new generate object
 gen = Generate(
@@ -55,11 +66,11 @@ opt.width = gen.width
 opt.height = gen.height
 
 # These need to be set for !fetch to work from the invokeai cli
-opt.steps = 50      # default value
 opt.cfg_scale = 7.5 # default value
 
 # Set the prompt and output directory
-opt.prompt = 'an astronaut riding a horse'
+opt.prompt = 'elderly witch, somber, photograph, late 19th century, creepy'
+
 opt.output_dir = './outputs'
 if not os.path.exists(opt.output_dir):
     os.makedirs(opt.output_dir)
