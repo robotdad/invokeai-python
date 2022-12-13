@@ -24,7 +24,7 @@ def prepare_image_metadata(opt, prefix, seed):
     return filename, formatted_dream_prompt
 
 # Register with image_callback in prompt2image, see invoke.py for how to handle variations etc.
-def image_writer(image, seed, first_seed=None, use_prefix=None):
+def image_writer(image, seed, first_seed=None, use_prefix=None, attention_maps_image=None):
     filename, dreamprompt = prepare_image_metadata(opt, prefix, seed)
     path = file_writer.save_image_and_prompt_to_png(
         image = image, 
@@ -36,7 +36,7 @@ def image_writer(image, seed, first_seed=None, use_prefix=None):
         name=filename)
     print('\n Generated:', path)
 
-# Setup the opt object, not typed, look to ldm/denerate for options corresponding to the cli
+# Setup the opt object, not typed, look to ldm/generate for options corresponding to the cli
 opt = Args()
 
 # Specify full paths in the InvokeAI configs/models.yaml to use from other directories
@@ -50,6 +50,13 @@ Globals.root = os.path.expanduser(args.root_dir or os.environ.get('INVOKEAI_ROOT
 Globals.try_patchmatch = args.patchmatch
 if not os.path.isabs(opt.conf):
     opt.conf = os.path.normpath(os.path.join(Globals.root,opt.conf))
+print(f'>> InvokeAI runtime directory is "{Globals.root}"')
+# normalize the config directory relative to root
+if not os.path.isabs(opt.conf):
+    opt.conf = os.path.normpath(os.path.join(Globals.root,opt.conf))
+
+import transformers
+transformers.logging.set_verbosity_error()
 
 # Model is stored in the metadata but not retrieved by !fetch
 opt.model = 'stable-diffusion-1.5'
@@ -69,7 +76,7 @@ opt.height = gen.height
 opt.cfg_scale = 7.5 # default value
 
 # Set the prompt and output directory
-opt.prompt = 'elderly witch, somber, photograph, late 19th century, creepy'
+opt.prompt = 'shiba inu on a wanted poster'
 
 opt.output_dir = './outputs'
 if not os.path.exists(opt.output_dir):
